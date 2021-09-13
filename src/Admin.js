@@ -1,12 +1,12 @@
 import React,{useState,useEffect} from 'react'
-import { Link } from 'react-router-dom'
 import axios from 'axios'
 import InfoDisplay from './InfoDisplay'
 import { Button } from 'react-bootstrap'
 
 const Admin = (props) =>{
     const [users,setUsers] = useState([])
-    const[title,setTitle] = useState('')
+    const [appliedUsers,setAppliedUsers] = useState([])
+    const [title,setTitle] = useState('')
     
 
     useEffect(() => {
@@ -17,42 +17,55 @@ const Admin = (props) =>{
     },[])
   
     const editUsers = (user) =>{
-        
-        const result = users.map((ele) =>{
-            if(ele._id === user._id ){
-                return {...ele,...user}
-            }else{
-                return {...ele}
-            }
-        })
-        setUsers(result)
-        
+        const result = users.filter((ele) =>{
+            return ele.jobTitle === user.jobTitle
+         })
+         
+         const newArr = result.map((each) =>{
+             if(each._id === user._id ){
+                 return {...each,...user}
+             }else{
+                 return {...each}
+             }
+         })
+         setAppliedUsers(newArr)
     }
     
 
     const handleClick = (jobTitle) =>{
         if(jobTitle === 'front'){
-           
-            setTitle('Front-End Developer')
-            
+           const result = users.filter((user) =>{
+               return user.jobTitle === 'Front-End Developer'
+              
+           })
+           setAppliedUsers(result)
+           setTitle('Front-End Developer')
         }else if(jobTitle === 'node'){
-           
+            const result = users.filter((user) =>{
+                return user.jobTitle === 'Node.js Developer'
+                
+            })
+            setAppliedUsers(result)
             setTitle('Node.js Developer')
-            
         }else if(jobTitle === 'mean'){
-          
+            const result = users.filter((user) =>{
+                return user.jobTitle === 'MEAN Stack Developer'
+                
+            })
+            setAppliedUsers(result)
             setTitle('MEAN Stack Developer')
             
         }else if(jobTitle === 'full'){
-           
+            const result = users.filter((user) =>{
+                return user.jobTitle === 'FULL Stack Developer'
+                
+            })
+            setAppliedUsers(result)
             setTitle('FULL Stack Developer')
-            
+           
         }
-        
     }
-   
-   
-    // console.log(users)
+    
     return(
         <div>
            
@@ -62,7 +75,7 @@ const Admin = (props) =>{
             <Button  variant="outline-primary" onClick={() => {handleClick('full')}}>FULL Stack Developer</Button>
            
            {
-               title.length > 0 && <InfoDisplay users={users}
+               title.length > 0 && <InfoDisplay appliedUsers={appliedUsers}
                                                 title={title}
                                                 editUsers={editUsers}
                                                 

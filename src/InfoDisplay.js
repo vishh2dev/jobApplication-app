@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState} from 'react'
 import axios from 'axios'
 import { Button } from 'react-bootstrap'
 import Table from 'react-bootstrap/Table'
@@ -6,50 +6,12 @@ import DisplayDetailsModal from './DisplayDetailsModal'
 const { DateTime } = require("luxon")
 
 const InfoDisplay = (props) =>{
-    const {title,editUsers,users} = props
-    const[filteredUsers,setFilteredUsers] = useState([])
-    
+    const {title,editUsers,appliedUsers} = props
+
     const [show, setShow] = useState(false)
     const[user,setUser] = useState({})
     const tableHeaders = ['Name','Technical skills','Experience','Applied Date','view Details','Update Application']
 
-    useEffect(() =>{
-            
-        if(title === 'Front-End Developer'){
-            const result = users.filter((user) =>{
-                return user.jobTitle === 'Front-End Developer'
-            })
-            setFilteredUsers(result)
-        }else if(title === 'Node.js Developer'){
-            const result = users.filter((user) =>{
-                return user.jobTitle === 'Node.js Developer'
-            })
-            setFilteredUsers(result)
-        }else if(title === 'MEAN Stack Developer'){
-            const result = users.filter((user) =>{
-                return user.jobTitle === 'MEAN Stack Developer'
-            })
-            setFilteredUsers(result)
-        }else if(title === 'FULL Stack Developer'){
-            const result = users.filter((user) =>{
-                return user.jobTitle === 'FULL Stack Developer'
-            })
-            setFilteredUsers(result)
-        }
-            
-        // }else if(title === 'Node.js Developer'){
-        //         return user.jobTitle === 'Node.js Developer'
-        // }else if(title === 'MEAN Stack Developer'){
-        //     return user.jobTitle === 'MEAN Stack Developer'
-        // }else if(title === 'FULL Stack Developer'){
-        //     return user.jobTitle === 'FULL Stack Developer'
-        // }
-    },[editUsers,title])
-           
-           
-          
-   
-   
 
     const handleDetails = (id) =>{
 
@@ -65,8 +27,7 @@ const InfoDisplay = (props) =>{
 
     const handleClose = () => setShow(false)
 
-    const updaterFunction = (id,text) =>{
-        // console.log(id,text)
+    const updaterFunction = (id,text,title) =>{
         axios.put(`http://dct-application-form.herokuapp.com/users/application-form/update/${id}`,{ status:text})
              .then((response) =>{
                  const result = response.data
@@ -87,11 +48,11 @@ const InfoDisplay = (props) =>{
         const humanReadable = dt.setLocale('fr').toLocaleString(dt.DATETIME_MED)
         return humanReadable
     }
-
+    
     return(
         <div>
-            <h2> {title} </h2>
-            <Table border="1px" >
+            <h2 className="mt-4"> Application for {title} </h2>
+            <Table   >
                 <thead>
                     <tr>
                         {
@@ -101,7 +62,7 @@ const InfoDisplay = (props) =>{
                 </thead>
                 <tbody>
                     {
-                        filteredUsers.map((ele,i) =>{
+                        appliedUsers.map((ele,i) =>{
                             return(
                                     <tr key={i}>
                                         <td> {ele.name} </td>

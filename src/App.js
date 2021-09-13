@@ -1,7 +1,6 @@
 import React from 'react'
 import { Link,Route } from 'react-router-dom'
 import {Container,Col, Row,} from 'react-bootstrap'
-import Home from './Home'
 import Apply from './Apply'
 import Admin from './Admin'
 
@@ -29,5 +28,3 @@ const App = (props) =>{
 
 export default App
 
-{/* <Route path="/front-end-developer" component={FrontEndDeveloper}/>
-       <Route path="/node-js-developer" component={NodeJsDeveloper} /> */}
