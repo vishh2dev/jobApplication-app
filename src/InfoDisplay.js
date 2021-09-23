@@ -2,8 +2,10 @@ import React,{useState} from 'react'
 import axios from 'axios'
 import { Button } from 'react-bootstrap'
 import Table from 'react-bootstrap/Table'
+import { DateTime } from "luxon";
+
 import DisplayDetailsModal from './DisplayDetailsModal'
-const { DateTime } = require("luxon")
+
 
 const InfoDisplay = (props) =>{
     const {title,editUsers,appliedUsers} = props
